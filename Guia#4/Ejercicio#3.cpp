@@ -1,11 +1,10 @@
 #include <iostream>
+#include <stdlib.h>
 
 using namespace std;
 
-
-
 struct Nodo{
-    int elemento;
+    char elemento;
     Nodo* siguiente;
 };
 
@@ -16,47 +15,42 @@ struct Cola{
 
 void initialize(Cola*);
 bool empty(Cola*);
-void push(Cola*,int);
+void push(Cola*,char);
 void pop(Cola*);
 void ShowQueue(Cola*);
+void search(Cola*,char);
 
 int main(){
     Nodo node;
     Cola cola;
     initialize(&cola);
-    int dato,opcion;
+    int opcion;
+    char caracter,buscar;
     bool status = true;
 
     do{
         system("cls");
         cout<<"***MENU***\n";
-        cout<<"1.Ingresar elemento a la cola\n";
-        cout<<"2.Sacar elemento de la cola\n";
-        cout<<"3.Mostrar elementos de la cola\n";
-        cout<<"4.Salir\n";
+        cout<<"1.Ingresar caracter a la cola\n";
+        cout<<"2.Buscar caracter en la cola\n";
+        cout<<"3.Salir\n";
         cout<<"Elija una opcion: ";cin>>opcion;
 
         switch(opcion){
             case 1:
                 cin.ignore();
-                cout<<"\nIngrese un dato: ";cin>>dato;
-                push(&cola,dato);
+                cout<<"\nIngrese un dato: ";cin>>caracter;
+                push(&cola,caracter);
                 cout<<"Pila actual: ";
                 ShowQueue(&cola);
                 system("pause");
                 break;
             case 2:
-                cout<<"\nSacando un dato...\n";
-                pop(&cola);
-                ShowQueue(&cola);
+                cout<<"\nCaracter especifico a buscar: ";cin>>buscar;
+                search(&cola,buscar);
                 system("pause");
                 break;
             case 3:
-                cout<<"\nMostrando cola\n";
-                ShowQueue(&cola);
-                system("pause");
-                break;
-            case 4:
                 cout<<"\nFin del programa\n";
                 status = false ;   
                 break;
@@ -79,7 +73,7 @@ bool empty(Cola *queue){
     return(queue->frente == NULL) ? true:false;
 }
 
-void push(Cola *queue, int dato){
+void push(Cola *queue, char dato){
     Nodo *aux = new Nodo;
     aux->elemento = dato;
     aux->siguiente = NULL;
@@ -121,3 +115,24 @@ void ShowQueue(Cola *queue){
     cout<<endl;
 }
 
+void search(Cola *cola,char dato){
+    int cont=0;
+    bool status = false;
+
+    while(!empty(cola)){
+        if(cola->frente->elemento == dato){
+            cout<<"\nElemento encontrado en la posicion "<<cont<<endl;
+            status = true;
+            cout<<"\nVaciando cola....\n";
+            while(!empty(cola)){
+                pop(cola);
+            }
+            break;
+        }
+    }
+
+    if(status == false){
+        cout<<"\nElemento no encontrado, verifique la cola: \n";
+        ShowQueue(cola);
+    }
+}
