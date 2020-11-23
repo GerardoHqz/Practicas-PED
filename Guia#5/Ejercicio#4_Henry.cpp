@@ -292,7 +292,7 @@ int main() {
             default:
                 cout << "Opción no válida" << endl;
                 break;
-        }|
+        }
     }
     return 0;
 }
